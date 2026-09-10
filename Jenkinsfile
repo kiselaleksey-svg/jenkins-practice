@@ -43,11 +43,13 @@ Browser=${params.BROWSER}
 
         stage('Run tests') {
             steps {
-                echo 'Checking that result.txt exists'
-                sh 'test -f result.txt'
+			        echo 'Starting external test runner'
+					sh "sh run-tests.sh ${params.ENVIRONMENT} ${params.BROWSER}"
+					echo 'Checking that result.txt exists'
+					sh 'test -f result.txt'
 
-                echo 'Checking the file content'
-                sh """
+					echo 'Checking the file content'
+					sh """
                     set -eu
 
                     echo 'Expected environment: ${params.ENVIRONMENT}'
