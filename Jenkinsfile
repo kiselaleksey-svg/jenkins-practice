@@ -1,5 +1,19 @@
 pipeline {
     agent any
+	
+	parameters {
+    choice(
+        name: 'ENVIRONMENT',
+        choices: ['dev', 'stage', 'production'],
+        description: 'Environment to test'
+    )
+
+    choice(
+        name: 'BROWSER',
+        choices: ['chrome', 'firefox', 'edge'],
+        description: 'Browser for automated tests'
+    )
+}
 
     stages {
         stage('Checkout') {
