@@ -19,14 +19,27 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                echo 'Checking that result.txt exists'
-                sh 'test -f result.txt'
+    steps {
+        echo 'Checking that result.txt exists'
+        sh 'test -f result.txt'
 
-                echo 'Checking the file content'
-                sh "grep -q 'Hello from GitHub and Jenkins!' result.txt"
-            }
-        }
+        echo 'Checking the file content'
+        sh '''
+            expected='Hello from GitHub and Jenkins!'
+            actual=$(cat result.txt)
+
+            echo "Expected: $expected"
+            echo "Actual:   $actual"
+
+            if [ "$actual" != "$expected" ]; then
+                echo "ERROR: result.txt contains unexpected text"
+                exit 1
+            fi
+
+            echo "Content check passed"
+        '''
+    }
+}
     }
 
     post {
