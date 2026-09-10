@@ -13,7 +13,7 @@ pipeline {
             steps {
                 writeFile(
                     file: 'result.txt',
-                    text: 'This text is intentionally incorrect'
+                    text: 'Hello from GitHub and Jenkins!'
                 )
             }
         }
